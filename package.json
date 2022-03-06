@@ -41,6 +41,8 @@
     ]
   },
   "devDependencies": {
-    "styled-components": "^5.3.3"
+    "favicons-webpack-plugin": "^5.0.2",
+    "styled-components": "^5.3.3",
+    "webpack-pwa-manifest": "^4.3.0"
   }
 }
