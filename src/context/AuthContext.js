@@ -27,7 +27,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   if (loading) {
-    return <p>loding...</p>;
+    return <p>loading...</p>;
   } else {
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
   }

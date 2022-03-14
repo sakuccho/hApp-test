@@ -9,11 +9,11 @@ const Home = () => {
   const navigate = useNavigate();
   const handleLogout = () => {
     auth.signOut();
-    navigate("/login");
+    navigate("/hApp-test/login");
   };
 
   if (!user) {
-    return <Navigate to="/Login" />
+    return <Navigate to="/hApp-test/Login" />
   } else {
     return (
       <>

@@ -9,10 +9,10 @@ const App = () => {
       <div style={{ margin: "2em" }}>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/login" element={<Login/>} />
-            <Route path="/UserLibrary" element={<UserLibrary/>} />
+            <Route path="/hApp-test" element={<Home />} />
+            <Route path="/hApp-test/signup" element={<SignUp />} />
+            <Route path="/hApp-test/login" element={<Login/>} />
+            <Route path="/hApp-test/UserLibrary" element={<UserLibrary/>} />
           </Routes>
         </BrowserRouter>
       </div>
