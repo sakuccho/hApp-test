@@ -24,7 +24,7 @@ const SignUp = () => {
           password: password.value,
         });
         console.log(documentRef);
-        navigate("/");
+        navigate("/hApp-test");
       }
     } catch (error) {
       console.log(error);

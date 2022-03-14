@@ -12,7 +12,7 @@ const Login = () => {
     console.log(event.target.elements);
     try {
       await signInWithEmailAndPassword(auth, email.value, password.value);
-      navigate("/");
+      navigate("/hApp-test");
     } catch (error) {
       console.log(error);
       setError(error.message)
