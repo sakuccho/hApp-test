@@ -13,7 +13,7 @@ const Home = () => {
   };
 
   if (!user) {
-    return <Navigate to="/" /> //一時的に変えてる。本当はto="/Login" />
+    return <Navigate to="/Login" />
   } else {
     return (
       <>
