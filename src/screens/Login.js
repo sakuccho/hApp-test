@@ -36,7 +36,7 @@ const Login = () => {
           <button>ログイン</button>
         </div>
         <div>
-          ユーザー登録は<Link to={"/signup"}>こちら</Link>から
+          ユーザー登録は<Link to={"/hApp-test/signup"}>こちら</Link>から
         </div>
       </form>
     </div>
