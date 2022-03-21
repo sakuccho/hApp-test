@@ -6,3 +6,5 @@ export {default as SecondArticleDisplay} from './ArticleCreateDisplays/SecondArt
 export {default as ArticleCreate} from './ArticleCreate'
 export {default as ArticleItems} from './ArticleItems'
 export {default as DisplayTags} from './DisplayTags'
+export {default as Search} from './Search'
+export {default as Header} from './Header'

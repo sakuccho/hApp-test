@@ -1,9 +1,14 @@
-import React from 'react';
+import React, {useState} from 'react';
+import { ArticleItems, Search } from "../../components";
 
 const MyFolder = () => {
+  const [searchValue, setSearchValue] = useState("");
+
   return(
     <div>
-      <h1>folder</h1>
+      <Search setSearchValue={setSearchValue}/>
+      <p>{searchValue}</p>
+      <ArticleItems />
     </div>
   )
 }

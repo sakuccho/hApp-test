@@ -1,0 +1,9 @@
+.headerLi {
+  list-style: none;
+  padding-right: 10px;
+}
+
+.headerUl {
+  display: flex;
+  padding: 0;
+}

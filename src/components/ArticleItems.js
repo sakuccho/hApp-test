@@ -17,7 +17,7 @@ const ArticleItems = () => {
   `;
 
   const PreviewCover = styled.div`
-    width: 80%;
+    width: 150px;
     height: 300px;
   `;
 
