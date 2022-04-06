@@ -1,23 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { FirstArticleDisplay } from "../components";
+import { FirstArticleDisplay, Header } from "../components";
 import {} from "../media/media"
 
 const ArticleCreate = () => {
-  const [move, setMove] = useState("none");
-  const handleDisplay = () => setMove("flex");
-
   const Wrapper = styled.div`
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    -webkit-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-
     width: 100%;
     height: 100vh;
-    display: ${move};
     justify-content: center;
   `;
 
@@ -46,7 +35,7 @@ const ArticleCreate = () => {
 
   return (
     <>
-      <button onClick={handleDisplay}>投稿</button>
+      <Header />
       <Wrapper>
         <Card>
           <CardContainer>

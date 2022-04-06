@@ -7,8 +7,8 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
-import { db } from "../firebase";
-import { DisplayTags } from "../components";
+import { db } from "../../firebase";
+import { DisplayTags } from "..";
 
 const ArticleItems = () => {
   // 記事
@@ -33,16 +33,17 @@ const ArticleItems = () => {
       const userInfo = authObject.currentUser;
       const list = [];
 
+      // 添削ドキュメント参照
       const usersCollectionRef = collection(db, "corrections");
       const q = query(usersCollectionRef, where("user_id", "==", userInfo.uid));
       const querySnapshot = await getDocs(q);
+      // ログインしているユーザーの記事をlistに保存
       querySnapshot.forEach((document) => {
-        // collectionの情報をlistに更新
         const item = [];
         item.push(document.data().image_path);
         item.push(document.data().body);
         item.push(document.data().user_id);
-        item.push(document.data().tagsId);
+        item.push(document.id);
         list.push(item);
       });
       setArticles(list);
@@ -66,13 +67,7 @@ const ArticleItems = () => {
                   <td>
                     <p>{item[1]}</p>
                     <div>
-                      {item[3].map((n, index) => {
-                        return(
-                          <div key ={index} className="column">
-                            <DisplayTags tagsId={n}/>
-                          </div>
-                        )
-                      })}
+                      <DisplayTags documentId={item[3]} />
                     </div>
                   </td>
                 </tr>

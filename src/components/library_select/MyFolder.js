@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { ArticleItems, Search } from "../../components";
+import { ArticleItems, Search, ResultItems } from "../../components";
 
 const MyFolder = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -8,7 +8,9 @@ const MyFolder = () => {
     <div>
       <Search setSearchValue={setSearchValue}/>
       <p>{searchValue}</p>
-      <ArticleItems />
+      {
+        !searchValue ? <ArticleItems /> : <ResultItems searchValue={searchValue} />
+      }
     </div>
   )
 }

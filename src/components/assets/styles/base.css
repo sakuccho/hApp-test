@@ -1,9 +1,11 @@
 .headerLi {
   list-style: none;
   padding-right: 10px;
+  width: 33%;
 }
 
 .headerUl {
   display: flex;
   padding: 0;
+  width: 100px;
 }

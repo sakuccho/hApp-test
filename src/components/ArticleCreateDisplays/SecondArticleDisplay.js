@@ -9,44 +9,48 @@ import { getAuth } from "firebase/auth";
 import { db } from "../../firebase";
 
 const SecondArticleDisplay = (props) => {
-  const Preview = styled.img`
-    width: 100%;
-  `;
 
-  const PreviewCover = styled.div`
-    width: 50%;
-    height: 300px;
-  `;
-
-  const AllContainer = styled.div`
-    display: flex;
+  const TagContainer = styled.div`
     align-items: center;
     width: 100%;
     height: 100%;
   `;
 
-  const ArticleBody = styled.textarea`
-    width: 100%;
-    height: 300px;
-    color: gray;
-  `;
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const authObject = getAuth();
+    const user = authObject.currentUser;
+    const { articleBody } = event.target.elements;
+    if (user !== null) {
+      // 投稿をデータベースに保存
+      const usersCollectionRef = collection(db, "corrections");
+      const documentRef = await addDoc(usersCollectionRef, {
+        user_id: user.uid,
+        body: articleBody.value,
+        image_path: props.imageUrl,
+      });
 
-  const Form = styled.form`
-    width: 50%;
-    height: 100%;
-  `;
+      tagsId.forEach(async (tag) => {
+        const tagsCollectionRef = collection(db, "attachedTag");
+        const tagsDocumentRef = await addDoc(tagsCollectionRef, {
+          article_id: documentRef.id,
+          tag_id: tag,
+        });
+        console.log(tagsDocumentRef);
+      });
+      navigate(0);
+    }
+  };
 
-  const navigate = useNavigate();
-  // tagについて
-  const suggestions = [{ id: "1", name: "USA" }];
-  const [tags, setTags] = useState([]);
   const [tagsId, setTagsId] = useState([]);
-
+  const [tags, setTags] = useState([]);
+  const navigate = useNavigate();
   const reactTags = useRef();
 
   const onDelete = useCallback(
     async (tagIndex) => {
-      setTags(tags.filter((_, i) => i !== tagIndex));
+      const newTags = tags.filter((tag) => tag.id !== (tagIndex + 1))
+      setTags( newTags )
 
       const tagsCorrectionRef = collection(db, "tags");
       const q = query(
@@ -64,7 +68,9 @@ const SecondArticleDisplay = (props) => {
 
   const onAddition = useCallback(
     async (newTag) => {
-      setTags([...tags, newTag]);
+        const newTags = [].concat(tags, newTag)
+        setTags(newTags)
+
       const tagsCorrectionRef = collection(db, "tags");
       const q = query(tagsCorrectionRef, where("tag_name", "==", newTag.name));
       const querySnapshot = await getDocs(q);
@@ -80,54 +86,34 @@ const SecondArticleDisplay = (props) => {
         setTagsId([...tagsId, querySnapshot.docs[0].id]);
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [tags, tagsId]
-    // tagをdbに追加
   );
 
-  console.log(tagsId);
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const authObject = getAuth();
-    const user = authObject.currentUser;
-    const { articleBody } = event.target.elements;
-    if (user !== null) {
-      // 投稿をデータベースに保存
-      const usersCollectionRef = collection(db, "corrections");
-      const documentRef = await addDoc(usersCollectionRef, {
-        user_id: user.uid,
-        body: articleBody.value,
-        image_path: props.imageUrl,
-        tagsId,
-      });
-      console.log(documentRef);
-      navigate(0);
-    }
-  };
-
   return (
-    <AllContainer>
-      <PreviewCover>
-        <Preview src={props.imageUrl} alt="uploaded" />
-      </PreviewCover>
-      <Form onSubmit={handleSubmit}>
-        <ReactTags
-          ref={reactTags}
-          tags={tags}
-          suggestions={suggestions}
-          onAddition={onAddition}
-          onDelete={onDelete}
-          allowNew
-        />
-        <ArticleBody
-          name="articleBody"
-          type="text"
-          placeholder="テキストを入力してください"
-        ></ArticleBody>
-        <input type="submit" value="新規投稿"></input>
-      </Form>
-    </AllContainer>
+    <div className="tag_container">
+      <div>
+        <img src={props.imageUrl} alt="uploaded" />
+      </div>
+      <form onSubmit={handleSubmit}>
+        <TagContainer>
+          <ReactTags
+            ref={reactTags}
+            tags={tags}
+            onAddition={onAddition}
+            onDelete={onDelete}
+            allowNew
+          />
+        </TagContainer>
+        <div>
+          <textarea
+            name="articleBody"
+            type="text"
+            placeholder="テキストを入力してください"
+          ></textarea>
+          <input type="submit" value="新規投稿"></input>
+        </div>
+      </form>
+    </div>
   );
 };
 
