@@ -3,13 +3,12 @@ import ReactTags from "react-tag-autocomplete";
 import styled from "styled-components";
 import "./assets/styles/tagInput.css";
 import { useNavigate } from "react-router-dom";
-
 import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
+import { EditField } from "..";
 import { getAuth } from "firebase/auth";
 import { db } from "../../firebase";
 
 const SecondArticleDisplay = (props) => {
-
   const TagContainer = styled.div`
     align-items: center;
     width: 100%;
@@ -28,16 +27,27 @@ const SecondArticleDisplay = (props) => {
         user_id: user.uid,
         body: articleBody.value,
         image_path: props.imageUrl,
+        image_name: props.imageName,
       });
 
+      // タグと記事を結びつける
       tagsId.forEach(async (tag) => {
         const tagsCollectionRef = collection(db, "attachedTag");
+        // eslint-disable-next-line no-unused-vars
         const tagsDocumentRef = await addDoc(tagsCollectionRef, {
           article_id: documentRef.id,
           tag_id: tag,
         });
-        console.log(tagsDocumentRef);
       });
+
+      const imgsCollectionRef = collection(db, "imgs");
+      // eslint-disable-next-line no-unused-vars
+      const imgsDocumentRef = await addDoc(imgsCollectionRef, {
+        image_path: props.imageUrl,
+        method_id: documentRef.id,
+        method: "article",
+      });
+
       navigate(0);
     }
   };
@@ -49,8 +59,9 @@ const SecondArticleDisplay = (props) => {
 
   const onDelete = useCallback(
     async (tagIndex) => {
-      const newTags = tags.filter((tag) => tag.id !== (tagIndex + 1))
-      setTags( newTags )
+      console.log(tagIndex);
+      const newTags = tags.filter((tag, index) => index !== tagIndex);
+      setTags(newTags);
 
       const tagsCorrectionRef = collection(db, "tags");
       const q = query(
@@ -60,6 +71,7 @@ const SecondArticleDisplay = (props) => {
       const querySnapshot = await getDocs(q);
       console.log(querySnapshot);
       querySnapshot.forEach(async (document) => {
+        console.log(document.id);
         setTagsId(tagsId.filter((n) => n !== document.id));
       });
     },
@@ -68,8 +80,8 @@ const SecondArticleDisplay = (props) => {
 
   const onAddition = useCallback(
     async (newTag) => {
-        const newTags = [].concat(tags, newTag)
-        setTags(newTags)
+      const newTags = [].concat(tags, newTag);
+      setTags(newTags);
 
       const tagsCorrectionRef = collection(db, "tags");
       const q = query(tagsCorrectionRef, where("tag_name", "==", newTag.name));
@@ -89,32 +101,36 @@ const SecondArticleDisplay = (props) => {
     [tags, tagsId]
   );
 
-  return (
-    <div className="tag_container">
-      <div>
-        <img src={props.imageUrl} alt="uploaded" />
-      </div>
-      <form onSubmit={handleSubmit}>
-        <TagContainer>
-          <ReactTags
-            ref={reactTags}
-            tags={tags}
-            onAddition={onAddition}
-            onDelete={onDelete}
-            allowNew
-          />
-        </TagContainer>
+  if (props.imageUrl) {
+    return (
+      <div className="tag_container">
         <div>
-          <textarea
-            name="articleBody"
-            type="text"
-            placeholder="テキストを入力してください"
-          ></textarea>
-          <input type="submit" value="新規投稿"></input>
+          <EditField imageUrl={props.imageUrl} />
         </div>
-      </form>
-    </div>
-  );
+        <form onSubmit={handleSubmit}>
+          <TagContainer>
+            <ReactTags
+              ref={reactTags}
+              tags={tags}
+              onAddition={onAddition}
+              onDelete={onDelete}
+              allowNew
+            />
+          </TagContainer>
+          <div>
+            <textarea
+              name="articleBody"
+              type="text"
+              placeholder="テキストを入力してください"
+            ></textarea>
+            <input type="submit" value="新規投稿"></input>
+          </div>
+        </form>
+      </div>
+    );
+  }else {
+    navigate("/hApp-test");
+  }
 };
 
 export default SecondArticleDisplay;

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { UserLibrarySelect, Header } from "../components";
 import "./assets/styles/nav.css";
+import "./assets/styles/base.css";
 
 const UserLibrary = () => {
   const [judge, setJudge] = useState(true);
@@ -10,7 +11,7 @@ const UserLibrary = () => {
   return (
     <>
       <Header />
-      <div className="ui container">
+      <div className="bodyContainer">
         <nav>
           <ul>
             <li className="current"><button onClick={handleFolder}>自分の作品</button></li>

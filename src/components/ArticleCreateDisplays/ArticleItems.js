@@ -8,7 +8,8 @@ import {
 } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { db } from "../../firebase";
-import { DisplayTags } from "..";
+import { DisplayTags, ArticleDelete } from "..";
+import "./assets/styles/base.css";
 
 const ArticleItems = () => {
   // 記事
@@ -26,6 +27,7 @@ const ArticleItems = () => {
   `;
 
   const [articles, setArticles] = useState([]);
+  const [update, setUpdate] = useState(true);
 
   useEffect(() => {
     (async () => {
@@ -48,7 +50,7 @@ const ArticleItems = () => {
       });
       setArticles(list);
     })();
-  }, []);
+  }, [update]);
 
   // 添削投稿の表示
   return (
@@ -58,7 +60,7 @@ const ArticleItems = () => {
           <div key={index}>
             <Container>
               <tbody>
-                <tr className="ui wide">
+                <tr>
                   <td>
                     <PreviewCover>
                       <Preview src={item[0]} alt="article_img" />
@@ -69,6 +71,9 @@ const ArticleItems = () => {
                     <div>
                       <DisplayTags documentId={item[3]} />
                     </div>
+                  </td>
+                  <td>
+                    <ArticleDelete articleId={item[3]} setUpdate={setUpdate} update={update} />
                   </td>
                 </tr>
               </tbody>

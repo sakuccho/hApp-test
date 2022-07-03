@@ -2,6 +2,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
 import { useState } from 'react';
+import "./assets/styles/base.css";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className="bodyContainer">
       <h1>ログイン</h1>
       {error && <p style={{ color: 'red' }}>※入力した情報が間違っております</p>}
       <form onSubmit={handleSubmit}>

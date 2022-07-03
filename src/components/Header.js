@@ -1,26 +1,64 @@
 import "./assets/styles/base.css";
-import styled from "styled-components";
-import Folder from "../imgs/folder.png";
-import HomePng from "../imgs/home.png";
-import articleImg from "../imgs/articleImg.png";
 import { Link } from "react-router-dom";
+import HomeIcon from "@mui/icons-material/Home";
+import FolderIcon from "@mui/icons-material/Folder";
+import AddBoxRoundedIcon from "@mui/icons-material/AddBoxRounded";
+import { Logout, NewPost } from "../components";
+import React, { useState } from "react";
 
 const Header = () => {
-  const Img = styled.img`
-    width: 31px;
-  `;
+  const [newPostOpen, setNewPostOpen] = useState(false);
 
-  return(
+  const handleNewPost = () => {
+    setNewPostOpen(true);
+  };
+
+  return (
     <>
       <header>
+        <div className="headerContainer">
           <ul className="headerUl">
-            <li className="headerLi"><Link to="/hApp-test/"><Img src={HomePng} alt="Home"/></Link></li>
-            <li className="headerLi"><Link to="/hApp-test/userLibrary"><img src={Folder} alt="folder"/></Link></li>
-            <li className="headerLi"><Link className="articleButton" to="/hApp-test/createArticle"><img src={articleImg} alt="createArticle"/></Link></li>
+            {/* ホーム画面リンク */}
+            <li className="headerLi">
+              <Link to="/hApp-test/">
+                <HomeIcon
+                  sx={{
+                    color: "#333333",
+                    fontSize: 40,
+                  }}
+                />
+              </Link>
+            </li>
+            {/* マイフォルダーリンク */}
+            <li className="headerLi">
+              <Link to="/hApp-test/userLibrary">
+                <FolderIcon
+                  sx={{
+                    color: "#333333",
+                    fontSize: 40,
+                  }}
+                />
+              </Link>
+            </li>
+            {/* 新規投稿 */}
+            <li className="headerLi">
+              <button className="newPostButton" onClick={handleNewPost}>
+                <AddBoxRoundedIcon
+                  className="backButton"
+                  sx={{
+                    color: "#333333",
+                    fontSize: 40,
+                  }}
+                />
+              </button>
+            </li>
           </ul>
-        </header>
+          <NewPost newPostOpen={newPostOpen} setNewPostOpen={setNewPostOpen} />
+          <Logout />
+        </div>
+      </header>
     </>
-  )
-}
+  );
+};
 
 export default Header;

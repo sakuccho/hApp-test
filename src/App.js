@@ -7,7 +7,7 @@ import { ArticleCreate } from "./components";
 const App = () => {
   return (
     <AuthProvider>
-      <div style={{ margin: "2em" }}>
+      <div>
         <BrowserRouter>
           <Routes>
             <Route path="/hApp-test" element={<Home />} />

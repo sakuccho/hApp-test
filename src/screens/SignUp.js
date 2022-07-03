@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { db } from '../firebase';
 import { collection, addDoc } from 'firebase/firestore';
-
+import "./assets/styles/base.css";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -33,7 +33,7 @@ const SignUp = () => {
   };
 
   return (
-    <div>
+    <div className="bodyContainer">
       <h1>ユーザ登録</h1>
       {error && <p style={{ color: 'red' }}>※入力した情報は使用できません</p>}
       <form onSubmit={handleSubmit}>

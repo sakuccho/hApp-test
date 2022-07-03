@@ -2,10 +2,75 @@
   list-style: none;
   padding-right: 10px;
   width: 33%;
+  padding-left: 10px;
 }
 
 .headerUl {
   display: flex;
   padding: 0;
   width: 100px;
+}
+
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 95%;
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+.logoutButton {
+  color: black;
+  height: 40px;
+  padding: 0 20px;
+}
+
+.newPostButton {
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+/* NewPostコンポーネント */
+.backButton {
+  cursor: pointer;
+}
+
+.newInputFile {
+  display: none;
+}
+
+.newPostContainer {
+  width: 300px;
+  display: block;
+  position: fixed;
+  top: 0px;
+  left: 10px;
+  background: white;
+}
+
+.close {
+  display: none;
+}
+
+.newPostContainer ul {
+  border: 1px solid #d1d1d1;
+  border-radius: 7px;
+  box-shadow: 0 0 7px #d1d1d1;
+  padding: 0;
+}
+
+.newPostContainer li {
+  list-style: none;
+  padding: 10px 0 10px 20px;
+  cursor: pointer;
+}
+
+.newPostContainer li:first-child {
+  border-bottom: 1px solid #d1d1d1;
+}
+
+.newPostContainer li:nth-child(2) {
+  border-bottom: 1px solid #d1d1d1;
 }
